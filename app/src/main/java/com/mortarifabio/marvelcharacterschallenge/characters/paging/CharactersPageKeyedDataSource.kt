@@ -1,11 +1,19 @@
 package com.mortarifabio.marvelcharacterschallenge.characters.paging
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.util.Log
 import androidx.paging.PageKeyedDataSource
+import com.mortarifabio.marvelcharacterschallenge.R
 import com.mortarifabio.marvelcharacterschallenge.api.ResponseApi
 import com.mortarifabio.marvelcharacterschallenge.characters.CharactersRepository
+import com.mortarifabio.marvelcharacterschallenge.database.MarvelDatabase
 import com.mortarifabio.marvelcharacterschallenge.extensions.largeImage
+import com.mortarifabio.marvelcharacterschallenge.extensions.showInSnackBar
 import com.mortarifabio.marvelcharacterschallenge.extensions.smallImage
+import com.mortarifabio.marvelcharacterschallenge.extensions.toCharactersResultMutableList
 import com.mortarifabio.marvelcharacterschallenge.model.Characters
 import com.mortarifabio.marvelcharacterschallenge.model.CharactersResult
 import com.mortarifabio.marvelcharacterschallenge.utils.Constants.Api.API_FIRST_PAGE
@@ -14,12 +22,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class CharactersPageKeyedDataSource(
+    private val context: Context,
     private val characterName: String
 ) : PageKeyedDataSource<Int, CharactersResult>() {
 
     private val repository: CharactersRepository by lazy {
-        CharactersRepository()
+        CharactersRepository(context)
     }
+    private var favoritesIds = listOf<Long>()
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,
@@ -28,13 +38,15 @@ class CharactersPageKeyedDataSource(
         CoroutineScope(Dispatchers.IO).launch {
             when (val response = repository.getCharacters(API_FIRST_PAGE, characterName)) {
                 is ResponseApi.Success -> {
+                    favoritesIds = repository.loadFavoritesIds()
                     val characters = response.data as Characters
                     generateImagesPaths(characters)
+                    setupFavorites(characters, favoritesIds)
                     callback.onResult(characters.data.results, null, API_FIRST_PAGE + 1)
                 }
                 is ResponseApi.Error -> {
-                    Log.e("API Error", response.message)
-                    callback.onResult(mutableListOf(), null, API_FIRST_PAGE + 1)
+                    val characters = repository.loadPagedFavorites(API_FIRST_PAGE).toCharactersResultMutableList()
+                    callback.onResult(characters, null, API_FIRST_PAGE + 1)
                 }
             }
         }
@@ -54,11 +66,12 @@ class CharactersPageKeyedDataSource(
                 is ResponseApi.Success -> {
                     val characters = response.data as Characters
                     generateImagesPaths(characters)
+                    setupFavorites(characters, favoritesIds)
                     callback.onResult(characters.data.results, nextPage)
                 }
                 is ResponseApi.Error -> {
-                    Log.e("API Error", response.message)
-                    callback.onResult(mutableListOf(), nextPage)
+                    val characters = repository.loadPagedFavorites(page).toCharactersResultMutableList()
+                    callback.onResult(characters, nextPage)
                 }
             }
         }
@@ -72,4 +85,10 @@ class CharactersPageKeyedDataSource(
         return characters
     }
 
+    private fun setupFavorites(characters: Characters, favorites: List<Long>): Characters {
+        characters.data.results.forEach {
+            it.favorite = favorites.contains(it.id)
+        }
+        return characters
+    }
 }

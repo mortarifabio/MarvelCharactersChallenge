@@ -13,4 +13,9 @@ class Constants {
         const val API_SMALL_IMAGE_PATH = "standard_xlarge"
         const val API_LARGE_IMAGE_PATH = "standard_incredible"
     }
+
+    object Database {
+        const val DB_NAME = "marvel_database"
+        const val DB_TABLE_FAVORITES = "favorites"
+    }
 }

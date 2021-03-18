@@ -11,6 +11,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mortarifabio.marvelcharacterschallenge.characters.viewModel.CharactersViewModel
 import com.mortarifabio.marvelcharacterschallenge.databinding.FragmentCharactersBinding
+import com.mortarifabio.marvelcharacterschallenge.model.CharactersResult
 
 class CharactersFragment : Fragment() {
 
@@ -19,12 +20,17 @@ class CharactersFragment : Fragment() {
         ViewModelProvider(this).get(CharactersViewModel::class.java)
     }
     private val charactersAdapter by lazy {
-        CharactersAdapter {
-            val action = CharactersFragmentDirections.actionListFragmentToDetailsFragment(it)
-            view?.findNavController()?.navigate(action)
+        CharactersAdapter { character, favorite ->
+            when(favorite){
+                true -> viewModel.addFavorite(character)
+                false -> viewModel.removeFavorite(character)
+                null -> {
+                    val action = CharactersFragmentDirections.actionListFragmentToDetailsFragment(character)
+                    view?.findNavController()?.navigate(action)
+                }
+            }
         }
     }
-    private var lastSearch: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,12 +52,8 @@ class CharactersFragment : Fragment() {
 
     private fun setupObservables() {
         binding.tietCharactersSearch.doOnTextChanged { text, _, _, _ ->
-            val actualSearch = text.toString()
-            if(actualSearch != lastSearch && actualSearch != ""){
-                viewModel.getCharacters(actualSearch)
-                loadContent()
-                lastSearch = actualSearch
-            }
+            viewModel.getCharacters(text.toString())
+            loadContent()
         }
     }
 

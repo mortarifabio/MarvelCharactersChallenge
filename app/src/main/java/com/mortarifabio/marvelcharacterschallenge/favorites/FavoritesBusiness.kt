@@ -1,11 +1,11 @@
-package com.mortarifabio.marvelcharacterschallenge.characters
+package com.mortarifabio.marvelcharacterschallenge.favorites
 
 import android.content.Context
+import com.mortarifabio.marvelcharacterschallenge.extensions.toCharactersResultMutableList
 import com.mortarifabio.marvelcharacterschallenge.extensions.toFavorite
-import com.mortarifabio.marvelcharacterschallenge.favorites.FavoritesRepository
 import com.mortarifabio.marvelcharacterschallenge.model.CharactersResult
 
-class CharactersBusiness(
+class FavoritesBusiness(
     private val context: Context
 ) {
 
@@ -13,10 +13,9 @@ class CharactersBusiness(
         FavoritesRepository(context)
     }
 
-    suspend fun addFavorite(character: CharactersResult?) {
-        character?.let {
-            repository.addFavorite(it.toFavorite())
-        }
+    suspend fun loadFavorites(): MutableList<CharactersResult> {
+        val favorites = repository.loadFavorites()
+        return favorites.toCharactersResultMutableList()
     }
 
     suspend fun removeFavorite(character: CharactersResult?) {

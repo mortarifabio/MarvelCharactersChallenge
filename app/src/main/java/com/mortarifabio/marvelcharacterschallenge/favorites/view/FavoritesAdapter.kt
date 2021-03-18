@@ -1,33 +1,43 @@
-package com.mortarifabio.marvelcharacterschallenge.characters.view
+package com.mortarifabio.marvelcharacterschallenge.favorites.view
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mortarifabio.marvelcharacterschallenge.R
 import com.mortarifabio.marvelcharacterschallenge.databinding.AdapterCharactersItemBinding
 import com.mortarifabio.marvelcharacterschallenge.model.CharactersResult
-import com.mortarifabio.marvelcharacterschallenge.model.CharactersResult.Companion.DIFF_CALLBACK
 
-class CharactersAdapter(
+class FavoritesAdapter (
+    private val favorites: MutableList<CharactersResult>,
     private val onItemClicked: (CharactersResult, Boolean?) -> Unit
-) : PagedListAdapter<CharactersResult, CharactersAdapter.ViewHolder>(DIFF_CALLBACK) {
+) : RecyclerView.Adapter<FavoritesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = AdapterCharactersItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
+        return ViewHolder(binding) { position ->
+            favorites.removeAt(position)
+            notifyItemChanged(position)
+            notifyItemRangeRemoved(position, 1)
+        }
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position), onItemClicked)
+        holder.bind(favorites[position], onItemClicked)
     }
 
+    override fun getItemCount(): Int {
+        return favorites.size
+    }
+
+
     class ViewHolder(
-        private val binding: AdapterCharactersItemBinding
+        private val binding: AdapterCharactersItemBinding,
+        private val removeFavoriteAt: (position: Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(result: CharactersResult?, onItemClicked: (CharactersResult, Boolean?) -> Unit) = with(binding) {
-            result?.let { character ->
+        fun bind(favorite: CharactersResult?, onItemClicked: (CharactersResult, Boolean?) -> Unit) = with(binding) {
+            favorite?.let { character ->
                 Glide.with(itemView.context)
                     .load(character.smallImage)
                     .placeholder(R.drawable.thumbnail_placeholder)
@@ -39,7 +49,8 @@ class CharactersAdapter(
                 }
                 cbAdapterCharactersItemFavorite.isChecked = character.favorite
                 cbAdapterCharactersItemFavorite.setOnClickListener {
-                    onItemClicked(character, !character.favorite)
+                    onItemClicked(character, false)
+                    removeFavoriteAt(adapterPosition)
                 }
             }
         }

@@ -7,6 +7,18 @@
     android:orientation="vertical"
     tools:context=".home.view.HomeActivity">
 
+    <TextView
+        android:id="@+id/tvHomeInternetAlert"
+        style="@style/InternetUnavaiablaAlert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="@string/no_internet_connection"
+        app:layout_constraintBottom_toTopOf="@id/fcvHomeContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fcvHomeContainer"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -16,7 +28,7 @@
         app:layout_constraintBottom_toTopOf="@id/bnHomeNavigation"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvHomeInternetAlert"
         app:navGraph="@navigation/nav_graph" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

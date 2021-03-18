@@ -14,7 +14,14 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="TextInputLayoutSearch" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+    <style name="InternetUnavaiablaAlert">
+        <item name="android:background">@color/yellow_700</item>
+        <item name="android:padding">@dimen/margin_default</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextInputLayoutSearch" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:layout_marginEnd">@dimen/margin_default</item>
         <item name="android:layout_marginStart">@dimen/margin_default</item>
         <item name="android:layout_marginTop">@dimen/margin_half</item>

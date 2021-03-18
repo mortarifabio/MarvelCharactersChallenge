@@ -9,21 +9,29 @@ import kotlinx.parcelize.Parcelize
 @JsonClass(generateAdapter = true)
 data class CharactersResult(
     val description: String?,
-    val id: Int,
+    val id: Long,
     val name: String,
     val thumbnail: Thumbnail?,
     var smallImage: String? = null,
     var largeImage: String? = null,
-    val favorite: Boolean = false
+    var favorite: Boolean = false
 ) : Parcelable {
     companion object {
-        var DIFF_CALLBACK: DiffUtil.ItemCallback<CharactersResult> = object : DiffUtil.ItemCallback<CharactersResult>() {
-            override fun areItemsTheSame(oldItem: CharactersResult, newItem: CharactersResult): Boolean {
-                return oldItem.id == newItem.id
+        var DIFF_CALLBACK: DiffUtil.ItemCallback<CharactersResult> =
+            object : DiffUtil.ItemCallback<CharactersResult>() {
+                override fun areItemsTheSame(
+                    oldItem: CharactersResult,
+                    newItem: CharactersResult
+                ): Boolean {
+                    return oldItem.id == newItem.id
+                }
+
+                override fun areContentsTheSame(
+                    oldItem: CharactersResult,
+                    newItem: CharactersResult
+                ): Boolean {
+                    return oldItem == newItem
+                }
             }
-            override fun areContentsTheSame(oldItem: CharactersResult, newItem: CharactersResult): Boolean {
-                return oldItem == newItem
-            }
-        }
     }
 }

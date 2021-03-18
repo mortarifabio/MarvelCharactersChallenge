@@ -1,11 +1,11 @@
-package com.mortarifabio.marvelcharacterschallenge.characters
+package com.mortarifabio.marvelcharacterschallenge.details
 
 import android.content.Context
 import com.mortarifabio.marvelcharacterschallenge.extensions.toFavorite
 import com.mortarifabio.marvelcharacterschallenge.favorites.FavoritesRepository
 import com.mortarifabio.marvelcharacterschallenge.model.CharactersResult
 
-class CharactersBusiness(
+class DetailsBusiness(
     private val context: Context
 ) {
 
