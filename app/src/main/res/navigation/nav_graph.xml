@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/charactersFragment">
+
+    <fragment
+        android:id="@+id/charactersFragment"
+        android:name="com.mortarifabio.marvelcharacterschallenge.characters.view.CharactersFragment"
+        android:label="fragment_list"
+        tools:layout="@layout/fragment_characters">
+        <action
+            android:id="@+id/action_listFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+        <action
+            android:id="@+id/action_listFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.mortarifabio.marvelcharacterschallenge.favorites.view.FavoritesFragment"
+        android:label="fragment_favorites"
+        tools:layout="@layout/fragment_favorites" >
+        <action
+            android:id="@+id/action_favoritesFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.mortarifabio.marvelcharacterschallenge.details.view.DetailsFragment"
+        android:label="fragment_details"
+        tools:layout="@layout/fragment_details" />
+
+</navigation>

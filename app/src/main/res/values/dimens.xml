@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_default">16dp</dimen>
+    <dimen name="margin_half">8dp</dimen>
+    <dimen name="margin_quarter">4dp</dimen>
+
+    <dimen name="thumbnail_size">140dp</dimen>
+    <dimen name="character_name_size">16sp</dimen>
+    <dimen name="favorite_checkbox_width">34dp</dimen>
+</resources>

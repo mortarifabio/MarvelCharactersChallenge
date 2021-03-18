@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Marvel Characters Challenge</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="favorites">Favorites</string>
+    <string name="all">All</string>
+    <string name="character_thumbnail">Character Thumbnail</string>
+    <string name="search_characters">Search characters</string>
+    <string name="characters">Characters</string>
+</resources>
