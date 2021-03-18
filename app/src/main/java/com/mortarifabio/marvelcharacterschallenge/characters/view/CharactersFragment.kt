@@ -1,13 +1,13 @@
 package com.mortarifabio.marvelcharacterschallenge.characters.view
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mortarifabio.marvelcharacterschallenge.characters.viewModel.CharactersViewModel
 import com.mortarifabio.marvelcharacterschallenge.databinding.FragmentCharactersBinding
@@ -19,10 +19,12 @@ class CharactersFragment : Fragment() {
         ViewModelProvider(this).get(CharactersViewModel::class.java)
     }
     private val charactersAdapter by lazy {
-        //todo: Configurar evento no click
         CharactersAdapter {
+            val action = CharactersFragmentDirections.actionListFragmentToDetailsFragment(it)
+            view?.findNavController()?.navigate(action)
         }
     }
+    private var lastSearch: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,13 +32,9 @@ class CharactersFragment : Fragment() {
     ): View {
         binding = FragmentCharactersBinding.inflate(inflater, container, false)
         setupRecyclerView()
+        loadContent()
         setupObservables()
         return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-        loadContent()
     }
 
     private fun setupRecyclerView() {
@@ -48,8 +46,12 @@ class CharactersFragment : Fragment() {
 
     private fun setupObservables() {
         binding.tietCharactersSearch.doOnTextChanged { text, _, _, _ ->
-            viewModel.getCharacters(text.toString())
-            loadContent()
+            val actualSearch = text.toString()
+            if(actualSearch != lastSearch && actualSearch != ""){
+                viewModel.getCharacters(actualSearch)
+                loadContent()
+                lastSearch = actualSearch
+            }
         }
     }
 

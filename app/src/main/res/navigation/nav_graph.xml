@@ -22,7 +22,7 @@
         android:id="@+id/favoritesFragment"
         android:name="com.mortarifabio.marvelcharacterschallenge.favorites.view.FavoritesFragment"
         android:label="fragment_favorites"
-        tools:layout="@layout/fragment_favorites" >
+        tools:layout="@layout/fragment_favorites">
         <action
             android:id="@+id/action_favoritesFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
@@ -32,6 +32,12 @@
         android:id="@+id/detailsFragment"
         android:name="com.mortarifabio.marvelcharacterschallenge.details.view.DetailsFragment"
         android:label="fragment_details"
-        tools:layout="@layout/fragment_details" />
+        tools:layout="@layout/fragment_details">
+        <argument
+            android:name="character"
+            android:defaultValue="@null"
+            app:argType="com.mortarifabio.marvelcharacterschallenge.model.CharactersResult"
+            app:nullable="true" />
+    </fragment>
 
 </navigation>

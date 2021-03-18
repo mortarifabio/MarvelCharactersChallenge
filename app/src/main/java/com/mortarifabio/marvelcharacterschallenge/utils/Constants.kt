@@ -10,7 +10,7 @@ class Constants {
         const val API_ORDER = "name"
         const val API_LIMIT = 50
         const val API_FIRST_PAGE = 1
-        const val API_SMALL_IMAGE_PATH = "standard_large"
-        const val API_LARGE_IMAGE_PATH = "landscape_incredible"
+        const val API_SMALL_IMAGE_PATH = "standard_xlarge"
+        const val API_LARGE_IMAGE_PATH = "standard_incredible"
     }
 }

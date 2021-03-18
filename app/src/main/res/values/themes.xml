@@ -27,12 +27,19 @@
         <item name="cardForegroundColor">@color/grey_20</item>
     </style>
 
-    <style name="CharacterName">
+    <style name="CharacterCardName">
         <item name="android:layout_marginBottom">@dimen/margin_quarter</item>
         <item name="android:layout_marginEnd">@dimen/margin_half</item>
         <item name="android:layout_marginStart">@dimen/margin_half</item>
         <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">@dimen/character_name_size</item>
+        <item name="android:textSize">@dimen/character_card_name_size</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="CharacterName" parent="CharacterCardName">
+        <item name="android:textSize">@dimen/character_name_size</item>
+        <item name="android:layout_marginEnd">@dimen/margin_default</item>
+        <item name="android:layout_marginStart">@dimen/margin_default</item>
+    </style>
+
 </resources>
