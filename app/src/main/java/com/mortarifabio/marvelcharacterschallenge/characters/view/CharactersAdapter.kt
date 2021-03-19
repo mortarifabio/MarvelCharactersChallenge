@@ -2,17 +2,17 @@ package com.mortarifabio.marvelcharacterschallenge.characters.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagedListAdapter
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mortarifabio.marvelcharacterschallenge.R
 import com.mortarifabio.marvelcharacterschallenge.databinding.AdapterCharactersItemBinding
 import com.mortarifabio.marvelcharacterschallenge.model.CharactersResult
-import com.mortarifabio.marvelcharacterschallenge.model.CharactersResult.Companion.DIFF_CALLBACK
 
 class CharactersAdapter(
     private val onItemClicked: (CharactersResult, Boolean?) -> Unit
-) : PagedListAdapter<CharactersResult, CharactersAdapter.ViewHolder>(DIFF_CALLBACK) {
+) : PagingDataAdapter<CharactersResult, CharactersAdapter.ViewHolder>(CharactersResult) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = AdapterCharactersItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)

@@ -16,22 +16,12 @@ data class CharactersResult(
     var largeImage: String? = null,
     var favorite: Boolean = false
 ) : Parcelable {
-    companion object {
-        var DIFF_CALLBACK: DiffUtil.ItemCallback<CharactersResult> =
-            object : DiffUtil.ItemCallback<CharactersResult>() {
-                override fun areItemsTheSame(
-                    oldItem: CharactersResult,
-                    newItem: CharactersResult
-                ): Boolean {
-                    return oldItem.id == newItem.id
-                }
-
-                override fun areContentsTheSame(
-                    oldItem: CharactersResult,
-                    newItem: CharactersResult
-                ): Boolean {
-                    return oldItem == newItem
-                }
-            }
+    companion object CharactersResultComparator : DiffUtil.ItemCallback<CharactersResult>() {
+        override fun areItemsTheSame(oldItem: CharactersResult, newItem: CharactersResult): Boolean {
+            return oldItem.id == newItem.id
+        }
+        override fun areContentsTheSame(oldItem: CharactersResult, newItem: CharactersResult): Boolean {
+            return oldItem == newItem
+        }
     }
 }

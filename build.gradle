@@ -11,7 +11,7 @@ buildscript {
         navigation          = "2.3.4"
         livedata            = "2.3.0"
         viewmodel           = "2.3.0"
-        paging              = "2.1.2"
+        paging              = "3.0.0-beta02"
         retrofit            = "2.9.0"
         logging_interceptor = "4.9.0"
         coroutines          = "1.4.2"

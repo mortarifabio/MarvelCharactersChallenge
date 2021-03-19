@@ -6,8 +6,10 @@
 
     <dimen name="thumbnail_size">140dp</dimen>
     <dimen name="favorite_checkbox_width">34dp</dimen>
+    <dimen name="search_button_width">50dp</dimen>
 
     <dimen name="character_card_name_size">16sp</dimen>
     <dimen name="character_name_size">20sp</dimen>
+    <dimen name="load_message_size">16sp</dimen>
 
 </resources>

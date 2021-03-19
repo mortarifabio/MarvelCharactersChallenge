@@ -5,10 +5,14 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
@@ -16,10 +20,14 @@ import com.mortarifabio.marvelcharacterschallenge.R
 import com.mortarifabio.marvelcharacterschallenge.characters.viewModel.CharactersViewModel
 import com.mortarifabio.marvelcharacterschallenge.databinding.FragmentCharactersBinding
 import com.mortarifabio.marvelcharacterschallenge.extensions.showInSnackBar
+import com.mortarifabio.marvelcharacterschallenge.model.CharactersResult
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class CharactersFragment : Fragment() {
 
     private lateinit var binding: FragmentCharactersBinding
+    private var emptyListSnackbar: Snackbar? = null
     private val viewModel by lazy {
         ViewModelProvider(this).get(CharactersViewModel::class.java)
     }
@@ -35,16 +43,6 @@ class CharactersFragment : Fragment() {
             }
         }
     }
-    private val adapterObserver = object : RecyclerView.AdapterDataObserver() {
-        private var snackBar: Snackbar? = null
-        override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-            if (itemCount == 0 && charactersAdapter.itemCount == 0) {
-                snackBar = showEmptyListSnackbar()
-            } else {
-                snackBar?.dismiss()
-            }
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,17 +50,12 @@ class CharactersFragment : Fragment() {
     ): View {
         binding = FragmentCharactersBinding.inflate(inflater, container, false)
         setupRecyclerView()
+        loadContent()
+        setupObservables()
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupObservables()
-        loadContent()
-    }
-
     private fun setupRecyclerView() {
-        charactersAdapter.registerAdapterDataObserver(adapterObserver)
         binding.rvCharacters.apply {
             layoutManager = GridLayoutManager(this.context, 2)
             adapter = charactersAdapter
@@ -70,18 +63,24 @@ class CharactersFragment : Fragment() {
     }
 
     private fun loadContent() {
-        viewModel.charactersPagedList?.observe(viewLifecycleOwner) { pagedList ->
-            charactersAdapter.submitList(pagedList)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.flow.collectLatest { pagingData ->
+                charactersAdapter.submitData(pagingData)
+            }
         }
     }
 
     private fun setupObservables() {
-        binding.tietCharactersSearch.doOnTextChanged { text, _, _, _ ->
-            viewModel.getCharacters(text.toString())
+        charactersAdapter.addLoadStateListener { loadState ->
+            if (loadState.source.refresh is LoadState.NotLoading && charactersAdapter.itemCount < 1) {
+                binding.tvNoCharactersFound.visibility = VISIBLE
+            } else {
+                binding.tvNoCharactersFound.visibility = GONE
+            }
         }
-    }
-
-    private fun showEmptyListSnackbar(): Snackbar? {
-        return activity?.getString(R.string.no_characters_found)?.showInSnackBar(binding.rvCharacters)
+        binding.bCharactersSearchButton.setOnClickListener {
+            viewModel.name = binding.tietCharactersSearch.text.toString()
+            charactersAdapter.refresh()
+        }
     }
 }

@@ -6,6 +6,8 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import android.util.Log
 import androidx.paging.PageKeyedDataSource
+import androidx.paging.PagingSource
+import androidx.paging.PagingState
 import com.mortarifabio.marvelcharacterschallenge.R
 import com.mortarifabio.marvelcharacterschallenge.api.ResponseApi
 import com.mortarifabio.marvelcharacterschallenge.characters.CharactersRepository
@@ -20,60 +22,55 @@ import com.mortarifabio.marvelcharacterschallenge.utils.Constants.Api.API_FIRST_
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
+import java.io.IOException
 
-class CharactersDataSource(
-    private val context: Context,
-    private val characterName: String
-) : PageKeyedDataSource<Int, CharactersResult>() {
+class CharactersPagingSource(
+    private val characterName: String,
+    private val context: Context
+) : PagingSource<Int, CharactersResult>() {
 
     private val repository: CharactersRepository by lazy {
         CharactersRepository(context)
     }
     private var favoritesIds = listOf<Long>()
 
-    override fun loadInitial(
-        params: LoadInitialParams<Int>,
-        callback: LoadInitialCallback<Int, CharactersResult>
-    ) {
-        CoroutineScope(Dispatchers.IO).launch {
-            when (val response = repository.getCharacters(API_FIRST_PAGE, characterName)) {
+
+    override fun getRefreshKey(state: PagingState<Int, CharactersResult>): Int? {
+        return state.anchorPosition?.let { anchorPosition ->
+            val anchorPage = state.closestPageToPosition(anchorPosition)
+            anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
+        }
+    }
+
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CharactersResult> {
+        try {
+            val page = params.key ?: API_FIRST_PAGE
+            when (val response = repository.getCharacters(page, characterName)) {
                 is ResponseApi.Success -> {
                     favoritesIds = repository.loadFavoritesIds()
                     val characters = response.data as Characters
                     generateImagesPaths(characters)
                     setupFavorites(characters, favoritesIds)
-                    callback.onResult(characters.data.results, null, API_FIRST_PAGE + 1)
+                    return LoadResult.Page(
+                        data = characters.data.results,
+                        prevKey = if(page > 1) { page - 1 } else { null },
+                        nextKey = page + 1
+                    )
                 }
                 is ResponseApi.Error -> {
-                    val characters = repository.loadPagedFavorites(API_FIRST_PAGE).toCharactersResultMutableList()
-                    callback.onResult(characters, null, API_FIRST_PAGE + 1)
+                    return LoadResult.Error(
+                        // todo: criar exceptions
+                        Exception()
+                    )
                 }
             }
-        }
-    }
-
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, CharactersResult>) {
-        loadData(params.key, params.key - 1, callback)
-    }
-
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, CharactersResult>) {
-        loadData(params.key, params.key + 1, callback)
-    }
-
-    private fun loadData(page: Int, nextPage: Int, callback: LoadCallback<Int, CharactersResult>) {
-        CoroutineScope(Dispatchers.IO).launch {
-            when (val response = repository.getCharacters(page, characterName)) {
-                is ResponseApi.Success -> {
-                    val characters = response.data as Characters
-                    generateImagesPaths(characters)
-                    setupFavorites(characters, favoritesIds)
-                    callback.onResult(characters.data.results, nextPage)
-                }
-                is ResponseApi.Error -> {
-                    val characters = repository.loadPagedFavorites(page).toCharactersResultMutableList()
-                    callback.onResult(characters, nextPage)
-                }
-            }
+        } catch (e: IOException) {
+            // IOException for network failures.
+            return LoadResult.Error(e)
+        } catch (e: HttpException) {
+            // HttpException for any non-2xx HTTP status codes.
+            return LoadResult.Error(e)
         }
     }
 
@@ -91,4 +88,6 @@ class CharactersDataSource(
         }
         return characters
     }
+
+
 }

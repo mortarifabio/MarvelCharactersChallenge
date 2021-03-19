@@ -37,7 +37,9 @@ class FavoritesFragment : Fragment() {
         }
         viewModel.isListEmpty.observe(viewLifecycleOwner) { isEmpty ->
             if(isEmpty) {
-                showEmptyListSnackbar()
+                binding.tvNoFavoritesCharacters.visibility = View.VISIBLE
+            } else {
+                binding.tvNoFavoritesCharacters.visibility = View.GONE
             }
         }
     }
@@ -53,10 +55,6 @@ class FavoritesFragment : Fragment() {
                 }
             }
         }
-    }
-
-    private fun showEmptyListSnackbar() {
-        activity?.getString(R.string.no_favorites_characters)?.showInSnackBar(binding.rvFavorites)
     }
 
 }

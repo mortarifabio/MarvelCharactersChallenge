@@ -24,15 +24,20 @@
     <style name="NoResultsMessage">
         <item name="android:padding">@dimen/margin_default</item>
         <item name="android:textAlignment">center</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/grey</item>
+        <item name="android:textSize">@dimen/load_message_size</item>
     </style>
 
     <style name="TextInputLayoutSearch" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:layout_marginEnd">@dimen/margin_default</item>
         <item name="android:layout_marginStart">@dimen/margin_default</item>
         <item name="android:layout_marginTop">@dimen/margin_half</item>
-        <item name="startIconDrawable">@drawable/ic_baseline_search_24</item>
         <item name="startIconTint">@color/grey</item>
+    </style>
+
+    <style name="ButtonSearch" parent="Widget.MaterialComponents.Button.TextButton.Icon">
+        <item name="icon">@drawable/ic_baseline_search_24</item>
+        <item name="android:layout_marginTop">@dimen/margin_quarter</item>
     </style>
 
     <style name="CharacterCard">
