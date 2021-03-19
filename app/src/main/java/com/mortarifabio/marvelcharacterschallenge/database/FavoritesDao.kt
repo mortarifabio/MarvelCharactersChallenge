@@ -21,4 +21,7 @@ interface FavoritesDao {
 
     @Query("SELECT id FROM favorites")
     suspend fun loadFavoritesIds(): List<Long>
+
+    @Query("SELECT COUNT(id) FROM favorites")
+    suspend fun getFavoritesCount(): Int
 }

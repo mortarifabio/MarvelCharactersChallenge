@@ -19,7 +19,6 @@ class CharactersViewModel(
 ): AndroidViewModel(application) {
 
     var charactersPagedList: LiveData<PagedList<CharactersResult>>? = null
-    private var charactersLiveDataSource: LiveData<PageKeyedDataSource<Int, CharactersResult>>? = null
     private val pagedListConfig = PagedList.Config.Builder()
         .setEnablePlaceholders(false)
         .setPageSize(API_LIMIT)
@@ -34,7 +33,6 @@ class CharactersViewModel(
 
     fun getCharacters(characterName: String = "") {
         val charactersDataSourceFactory = CharactersDataSourceFactory(getApplication(), characterName)
-        charactersLiveDataSource = charactersDataSourceFactory.getLiveDataSource()
         charactersPagedList = LivePagedListBuilder(charactersDataSourceFactory, pagedListConfig).build()
     }
 

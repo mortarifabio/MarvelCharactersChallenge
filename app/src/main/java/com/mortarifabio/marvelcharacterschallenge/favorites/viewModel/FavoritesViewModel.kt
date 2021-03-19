@@ -13,19 +13,23 @@ class FavoritesViewModel(
 ): AndroidViewModel(application) {
 
     val favoritesLiveData: MutableLiveData<MutableList<CharactersResult>> = MutableLiveData()
+    val isListEmpty: MutableLiveData<Boolean> = MutableLiveData(false)
     private val business by lazy {
         FavoritesBusiness(application)
     }
 
     fun loadFavorites() {
         viewModelScope.launch {
-            favoritesLiveData.postValue(business.loadFavorites())
+            val favorites = business.loadFavorites()
+            favoritesLiveData.postValue(favorites)
+            isListEmpty.postValue(favorites.isEmpty())
         }
     }
 
     fun removeFavorite(character: CharactersResult?) {
         viewModelScope.launch {
-            business.removeFavorite(character)
+            val totalFavorites = business.removeFavorite(character)
+            isListEmpty.postValue(totalFavorites == 0)
         }
     }
 

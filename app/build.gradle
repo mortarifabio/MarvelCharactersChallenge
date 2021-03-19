@@ -46,6 +46,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$appcompat"
     implementation "com.google.android.material:material:$material"
     implementation "androidx.constraintlayout:constraintlayout:$constraintlayout"
+    implementation "androidx.coordinatorlayout:coordinatorlayout:$coordinatorlayout"
 
     implementation "androidx.activity:activity-ktx:$activity"
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation"
@@ -60,6 +61,7 @@ dependencies {
 
     implementation "com.squareup.moshi:moshi:$moshi"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi"
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"

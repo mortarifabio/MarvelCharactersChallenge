@@ -18,9 +18,10 @@ class FavoritesBusiness(
         return favorites.toCharactersResultMutableList()
     }
 
-    suspend fun removeFavorite(character: CharactersResult?) {
+    suspend fun removeFavorite(character: CharactersResult?) : Int {
         character?.let {
             repository.removeFavorite(it.toFavorite())
         }
+        return repository.getFavoritesCount()
     }
 }

@@ -24,4 +24,8 @@ class FavoritesRepository(
         return favoritesDao.loadFavorites()
     }
 
+    suspend fun getFavoritesCount(): Int {
+        return favoritesDao.getFavoritesCount()
+    }
+
 }

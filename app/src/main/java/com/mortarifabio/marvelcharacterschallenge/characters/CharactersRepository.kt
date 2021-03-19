@@ -15,7 +15,7 @@ class CharactersRepository(
         MarvelDatabase.getDatabase(context).favoritesDao()
     }
 
-    suspend fun getCharacters(page: Int, characterName: String): Any {
+    suspend fun getCharacters(page: Int, characterName: String): ResponseApi {
         val offset = API_LIMIT * (page - 1)
         return try {
             val response = if(characterName != "") {

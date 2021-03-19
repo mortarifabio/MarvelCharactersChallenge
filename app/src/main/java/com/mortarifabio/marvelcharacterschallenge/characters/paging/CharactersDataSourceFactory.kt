@@ -13,9 +13,9 @@ class CharactersDataSourceFactory(
     private val charactersLiveDataSource = MutableLiveData<PageKeyedDataSource<Int, CharactersResult>>()
 
     override fun create(): DataSource<Int, CharactersResult> {
-        val charactersDataSource = CharactersPageKeyedDataSource(context, characterName)
+        val charactersDataSource = CharactersDataSource(context, characterName)
         charactersLiveDataSource.postValue(charactersDataSource)
-        return charactersDataSource
+        return CharactersDataSource(context, characterName)
     }
 
     fun getLiveDataSource(): MutableLiveData<PageKeyedDataSource<Int, CharactersResult>> {

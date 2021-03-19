@@ -21,7 +21,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class CharactersPageKeyedDataSource(
+class CharactersDataSource(
     private val context: Context,
     private val characterName: String
 ) : PageKeyedDataSource<Int, CharactersResult>() {

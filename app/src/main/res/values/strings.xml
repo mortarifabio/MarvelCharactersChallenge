@@ -10,4 +10,6 @@
     <string name="characters">Characters</string>
     <string name="character_image">Character Image</string>
     <string name="no_internet_connection">No internet connection</string>
+    <string name="no_characters_found">No characters found</string>
+    <string name="no_favorites_characters">No favorites characters</string>
 </resources>
