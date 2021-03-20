@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/tvHomeInternetAlert"
-        style="@style/InternetUnavaiablaAlert"
+        style="@style/InternetUnavailableAlert"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/no_internet_connection"

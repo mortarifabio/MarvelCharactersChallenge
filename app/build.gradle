@@ -68,8 +68,6 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:$logging_interceptor"
 
     implementation "com.squareup.moshi:moshi:$moshi"
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi"
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
@@ -81,10 +79,10 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:$glide"
     kapt "com.github.bumptech.glide:compiler:$glide"
 
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'androidx.test:core:1.3.0'
-    testImplementation 'org.mockito:mockito-core:2.28.2'
-    testImplementation 'org.mockito:mockito-inline:2.28.2'
     testImplementation 'org.robolectric:robolectric:4.5.1'
     testImplementation 'com.squareup.okhttp3:mockwebserver:4.9.0'
     androidTestImplementation "androidx.arch.core:core-testing:2.1.0"

@@ -1,10 +1,6 @@
 <resources>
     <string name="app_name">Marvel Characters Challenge</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="favorites">Favorites</string>
-    <string name="all">All</string>
-    <string name="close">Close</string>
     <string name="character_thumbnail">Character Thumbnail</string>
     <string name="search_characters">Search characters</string>
     <string name="characters">Characters</string>
@@ -13,7 +9,5 @@
     <string name="loading_characters">Loading characters …</string>
     <string name="no_characters_found">No characters found</string>
     <string name="error_loading_characters">Error loading characters</string>
-    <string name="loading_favorites">Loading favorites …</string>
     <string name="no_favorites_characters">No favorites characters</string>
-    <string name="error_loading_favorites">Error loading favorites</string>
 </resources>

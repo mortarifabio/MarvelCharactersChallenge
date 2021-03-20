@@ -1,6 +1,5 @@
 package com.mortarifabio.marvelcharacterschallenge.database
 
-import android.nfc.tech.MifareUltralight.PAGE_SIZE
 import androidx.room.*
 import com.mortarifabio.marvelcharacterschallenge.model.Favorite
 

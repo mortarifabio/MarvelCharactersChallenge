@@ -7,15 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.mortarifabio.marvelcharacterschallenge.R
 import com.mortarifabio.marvelcharacterschallenge.databinding.FragmentDetailsBinding
 import com.mortarifabio.marvelcharacterschallenge.details.viewModel.DetailsViewModel
-import com.mortarifabio.marvelcharacterschallenge.favorites.view.FavoritesFragmentDirections
 import com.mortarifabio.marvelcharacterschallenge.model.CharactersResult
 
 class DetailsFragment : Fragment() {

@@ -15,7 +15,7 @@ class CharactersResultTest {
     }
 
     @Test
-    fun areItemsTheSame_diferentIdsShouldReturnFalse() {
+    fun areItemsTheSame_differentIdsShouldReturnFalse() {
         val spiderPig1 = CharactersResult("The pig is in the web", 27L, "Spider-Pig", Thumbnail("spiderpig-thumb", "jpg"))
         val spiderPig2 = CharactersResult("The pig is in the web", 12L, "Spider-Pig", Thumbnail("spiderpig-thumb", "jpg"))
 
@@ -24,7 +24,7 @@ class CharactersResultTest {
     }
 
     @Test
-    fun areContentsTheSame_diferentContentShouldReturnFalse() {
+    fun areContentsTheSame_differentContentShouldReturnFalse() {
         val spiderPig = CharactersResult("The pig is in the web", 27L, "Spider-Pig", Thumbnail("spiderpig-thumb", "jpg"))
         val ironPig = CharactersResult("Pig made of steel", 27L, "Iron-Pig", Thumbnail("ironpig-thumb", "jpg"))
 

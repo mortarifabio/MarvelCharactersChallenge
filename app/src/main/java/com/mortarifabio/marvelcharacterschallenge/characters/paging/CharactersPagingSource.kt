@@ -7,12 +7,9 @@ import com.mortarifabio.marvelcharacterschallenge.api.ResponseApi
 import com.mortarifabio.marvelcharacterschallenge.characters.CharactersRepository
 import com.mortarifabio.marvelcharacterschallenge.extensions.largeImage
 import com.mortarifabio.marvelcharacterschallenge.extensions.smallImage
-import com.mortarifabio.marvelcharacterschallenge.extensions.toCharactersResultMutableList
 import com.mortarifabio.marvelcharacterschallenge.model.Characters
 import com.mortarifabio.marvelcharacterschallenge.model.CharactersResult
 import com.mortarifabio.marvelcharacterschallenge.utils.Constants.Api.API_FIRST_PAGE
-import retrofit2.HttpException
-import java.io.IOException
 
 class CharactersPagingSource(
     private val characterName: String,

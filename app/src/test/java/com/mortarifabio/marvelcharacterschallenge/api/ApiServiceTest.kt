@@ -1,7 +1,6 @@
 package com.mortarifabio.marvelcharacterschallenge.api
 
 import android.os.Build
-import com.mortarifabio.marvelcharacterschallenge.utils.Constants
 import com.mortarifabio.marvelcharacterschallenge.utils.Constants.Api.API_LIMIT
 import junit.framework.TestCase
 import kotlinx.coroutines.runBlocking

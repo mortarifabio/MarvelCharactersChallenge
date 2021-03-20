@@ -1,7 +1,6 @@
 package com.mortarifabio.marvelcharacterschallenge.model
 
 import android.os.Parcelable
-import androidx.recyclerview.widget.DiffUtil
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.mortarifabio.marvelcharacterschallenge.utils.Constants.Database.DB_TABLE_FAVORITES

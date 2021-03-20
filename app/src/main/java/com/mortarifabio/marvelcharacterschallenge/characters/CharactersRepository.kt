@@ -4,7 +4,6 @@ import android.content.Context
 import com.mortarifabio.marvelcharacterschallenge.api.ApiService.marvelApi
 import com.mortarifabio.marvelcharacterschallenge.api.ResponseApi
 import com.mortarifabio.marvelcharacterschallenge.database.MarvelDatabase
-import com.mortarifabio.marvelcharacterschallenge.model.Favorite
 import com.mortarifabio.marvelcharacterschallenge.utils.Constants.Api.API_LIMIT
 
 class CharactersRepository(
