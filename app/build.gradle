@@ -42,6 +42,9 @@ android {
             returnDefaultValues = true
         }
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
