@@ -8,10 +8,11 @@ android:
     - platform-tools
     - build-tools-30.0.2
     - android-30
+    - android-22
     - extra-google-google_play_services
     - extra-google-m2repository
     - extra-android-m2repository
-    - sys-img-x86-android-26
+    - sys-img-armeabi-v7a-android-22
 
   licenses:
     - 'android-sdk-preview-license-+'
@@ -36,6 +37,7 @@ env:
     - ADB_INSTALL_TIMEOUT=8
 
 before_script:
+  - android list target
   - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a -c 100M
   - emulator -avd test -no-audio -no-window &
   - android-wait-for-emulator
@@ -44,5 +46,4 @@ before_script:
   - adb shell input keyevent 82 &
 
 script:
-  - android list target
   - ./gradlew build checkstyle connectedCheck -PdisablePreDex
