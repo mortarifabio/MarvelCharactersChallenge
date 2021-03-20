@@ -28,11 +28,7 @@ object ApiService {
                 .build()
     }
 
-    //todo: remover loggingInterceptor
     fun getInterceptorClient(): OkHttpClient {
-        val loggingInterceptor = HttpLoggingInterceptor()
-        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-
         val timestamp = getTimestamp()
         val hash = getHash(timestamp)
         val interceptor = OkHttpClient.Builder()
@@ -48,7 +44,7 @@ object ApiService {
                             .build()
                     val newRequest = chain.request().newBuilder().url(url).build()
                     chain.proceed(newRequest)
-                }.addInterceptor(loggingInterceptor)
+                }
         return interceptor.build()
     }
 
