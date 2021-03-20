@@ -26,15 +26,11 @@ class CharactersRepository(
             if (response.isSuccessful) {
                 ResponseApi.Success(response.body())
             } else {
-                ResponseApi.Error(response.code(), response.toString())
+                ResponseApi.Error(response.message())
             }
         } catch (e: Exception) {
-            ResponseApi.Error(0, e.localizedMessage ?: e.message.toString())
+            ResponseApi.Error(e.localizedMessage ?: e.message.toString())
         }
-    }
-
-    suspend fun loadPagedFavorites(page: Int): List<Favorite> {
-        return favoritesDao.loadPagedFavorites(page)
     }
 
     suspend fun loadFavoritesIds(): List<Long> {

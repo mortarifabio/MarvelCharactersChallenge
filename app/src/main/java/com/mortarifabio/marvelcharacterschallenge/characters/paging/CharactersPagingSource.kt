@@ -1,27 +1,16 @@
 package com.mortarifabio.marvelcharacterschallenge.characters.paging
 
 import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import android.os.Build
-import android.util.Log
-import androidx.paging.PageKeyedDataSource
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.mortarifabio.marvelcharacterschallenge.R
 import com.mortarifabio.marvelcharacterschallenge.api.ResponseApi
 import com.mortarifabio.marvelcharacterschallenge.characters.CharactersRepository
-import com.mortarifabio.marvelcharacterschallenge.database.MarvelDatabase
 import com.mortarifabio.marvelcharacterschallenge.extensions.largeImage
-import com.mortarifabio.marvelcharacterschallenge.extensions.showInSnackBar
 import com.mortarifabio.marvelcharacterschallenge.extensions.smallImage
 import com.mortarifabio.marvelcharacterschallenge.extensions.toCharactersResultMutableList
 import com.mortarifabio.marvelcharacterschallenge.model.Characters
 import com.mortarifabio.marvelcharacterschallenge.model.CharactersResult
 import com.mortarifabio.marvelcharacterschallenge.utils.Constants.Api.API_FIRST_PAGE
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -53,23 +42,16 @@ class CharactersPagingSource(
                     generateImagesPaths(characters)
                     setupFavorites(characters, favoritesIds)
                     return LoadResult.Page(
-                        data = characters.data.results,
-                        prevKey = if(page > 1) { page - 1 } else { null },
+                        data = characters.data.results.toList(),
+                        prevKey = null,
                         nextKey = page + 1
                     )
                 }
                 is ResponseApi.Error -> {
-                    return LoadResult.Error(
-                        // todo: criar exceptions
-                        Exception()
-                    )
+                    return LoadResult.Error(Exception(response.message))
                 }
             }
-        } catch (e: IOException) {
-            // IOException for network failures.
-            return LoadResult.Error(e)
-        } catch (e: HttpException) {
-            // HttpException for any non-2xx HTTP status codes.
+        } catch (e: Exception) {
             return LoadResult.Error(e)
         }
     }

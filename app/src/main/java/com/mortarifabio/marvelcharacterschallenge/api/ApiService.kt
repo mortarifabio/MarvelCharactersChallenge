@@ -30,7 +30,7 @@ object ApiService {
     }
 
     //todo: remover loggingInterceptor
-    private fun getInterceptorClient(): OkHttpClient {
+    fun getInterceptorClient(): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
@@ -49,7 +49,7 @@ object ApiService {
                             .build()
                     val newRequest = chain.request().newBuilder().url(url).build()
                     chain.proceed(newRequest)
-                }
+                }.addInterceptor(loggingInterceptor)
         return interceptor.build()
     }
 

@@ -10,13 +10,13 @@ class NetworkUtils(
 
     private val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
 
-    fun setupNetworkObserver(showAlert: (Boolean) -> Unit) {
+    fun setupNetworkObserver(isConnected: (Boolean) -> Unit) {
         val networkCallback: ConnectivityManager.NetworkCallback = object : ConnectivityManager.NetworkCallback() {
             override fun onAvailable(network: Network) {
-                showAlert(false)
+                isConnected(true)
             }
             override fun onLost(network: Network) {
-                showAlert(true)
+                isConnected(false)
             }
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

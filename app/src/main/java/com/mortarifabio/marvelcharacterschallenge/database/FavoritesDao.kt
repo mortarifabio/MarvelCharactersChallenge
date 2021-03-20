@@ -16,9 +16,6 @@ interface FavoritesDao {
     @Query("SELECT * FROM favorites ORDER BY name ASC")
     suspend fun loadFavorites(): List<Favorite>
 
-    @Query("SELECT * FROM favorites ORDER BY name ASC LIMIT $PAGE_SIZE OFFSET $PAGE_SIZE * (:page - 1)")
-    suspend fun loadPagedFavorites(page: Int): List<Favorite>
-
     @Query("SELECT id FROM favorites")
     suspend fun loadFavoritesIds(): List<Long>
 

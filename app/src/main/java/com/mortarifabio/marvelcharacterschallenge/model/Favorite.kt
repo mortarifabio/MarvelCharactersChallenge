@@ -16,17 +16,4 @@ data class Favorite(
     val name: String,
     var smallImage: String? = null,
     var largeImage: String? = null
-) : Parcelable {
-    companion object {
-        var DIFF_CALLBACK: DiffUtil.ItemCallback<Favorite> =
-            object : DiffUtil.ItemCallback<Favorite>() {
-                override fun areItemsTheSame(oldItem: Favorite, newItem: Favorite): Boolean {
-                    return oldItem.id == newItem.id
-                }
-
-                override fun areContentsTheSame(oldItem: Favorite, newItem: Favorite): Boolean {
-                    return oldItem == newItem
-                }
-            }
-    }
-}
+) : Parcelable

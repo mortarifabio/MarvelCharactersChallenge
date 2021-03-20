@@ -27,7 +27,7 @@
                 android:id="@+id/tietCharactersSearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textFilter" />
+                android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -57,11 +57,10 @@
             tools:listitem="@layout/adapter_characters_item" />
 
         <TextView
-            android:id="@+id/tvNoCharactersFound"
-            style="@style/NoResultsMessage"
+            android:id="@+id/tvMessages"
+            style="@style/ListMessages"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/no_characters_found"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

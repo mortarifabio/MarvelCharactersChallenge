@@ -19,9 +19,10 @@
         <item name="android:padding">@dimen/margin_default</item>
         <item name="android:textAlignment">center</item>
         <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/load_message_size</item>
     </style>
 
-    <style name="NoResultsMessage">
+    <style name="ListMessages">
         <item name="android:padding">@dimen/margin_default</item>
         <item name="android:textAlignment">center</item>
         <item name="android:textColor">@color/grey</item>
@@ -58,6 +59,7 @@
         <item name="android:textSize">@dimen/character_name_size</item>
         <item name="android:layout_marginEnd">@dimen/margin_default</item>
         <item name="android:layout_marginStart">@dimen/margin_default</item>
+        <item name="android:layout_marginTop">@dimen/margin_half</item>
     </style>
 
 </resources>

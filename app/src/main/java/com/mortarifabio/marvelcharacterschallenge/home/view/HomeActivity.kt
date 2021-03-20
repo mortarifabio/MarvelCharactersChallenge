@@ -1,5 +1,7 @@
 package com.mortarifabio.marvelcharacterschallenge.home.view
 
+import android.content.res.Configuration
+import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -22,8 +24,21 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        setupActionBar(resources.configuration)
         setupNavigation()
         setupNetworkObserver()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        setupActionBar(newConfig)
+    }
+
+    private fun setupActionBar(configuration: Configuration) {
+        when(configuration.orientation){
+            ORIENTATION_LANDSCAPE -> supportActionBar?.hide()
+            else -> supportActionBar?.show()
+        }
     }
 
     private fun setupNavigation() {
@@ -36,8 +51,8 @@ class HomeActivity : AppCompatActivity() {
     private fun setupNetworkObserver() {
         networkUtils.apply {
             showNoConnectionAlert(!isNetworkConnected())
-            setupNetworkObserver { show ->
-                showNoConnectionAlert(show)
+            setupNetworkObserver { isConnected ->
+                showNoConnectionAlert(!isConnected)
             }
         }
     }

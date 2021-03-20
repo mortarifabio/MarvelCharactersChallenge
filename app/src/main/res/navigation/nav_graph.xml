@@ -38,6 +38,11 @@
             android:defaultValue="@null"
             app:argType="com.mortarifabio.marvelcharacterschallenge.model.CharactersResult"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_detailsFragment_self"
+            app:destination="@id/detailsFragment"
+            app:popUpTo="@id/detailsFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
 </navigation>

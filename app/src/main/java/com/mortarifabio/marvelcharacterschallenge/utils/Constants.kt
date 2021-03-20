@@ -18,4 +18,5 @@ class Constants {
         const val DB_NAME = "marvel_database"
         const val DB_TABLE_FAVORITES = "favorites"
     }
+
 }
